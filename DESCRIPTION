@@ -18,3 +18,4 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/ngotelli/upscaler
 BugReports: https://github.com/ngotelli/upscaler/issues
+RoxygenNote: 7.2.3
