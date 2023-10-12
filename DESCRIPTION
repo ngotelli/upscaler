@@ -11,10 +11,9 @@ Description: Organizing code for large projects is challenging.
     This package provides functions for building useful sub-folders, creating
     a time-stamped log file, building separate function files with templates,
     constructing annotated .csv data files, quickly visualizing data and 
-    statistically testing data with a set of 'qplot' functions, and more. 
+    statistically testing data with a set of \code{qplot} functions, and more. 
     Repetitive tasks in large projects can be batch-processed.
-    \code{qplot} functions More about what it does (maybe more than one line)
-License: What license is it under?
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/ngotelli/upscaler
