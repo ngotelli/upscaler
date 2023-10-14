@@ -5,9 +5,9 @@
 # inputs: number of labels, character string, optional file name suffix
 # outputs: vector of labels (or file names)
 ########################################
-#' Create a vector of labels
+#' Create a Vector of Labels
 #'
-#' Create a vector of character strings with padded, consecutive labels.
+#' Create a vector of character strings with padded, consecutive numbering.
 
 #' @param n Number of labels to create.
 #' @param string Character string for label.
