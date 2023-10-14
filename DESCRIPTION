@@ -3,7 +3,10 @@ Type: Package
 Title: Tools for Coding Large Projects
 Version: 0.1
 Authors@R: 
-    person("Nicholas", "Gotelli", , "ngotelli@uvm.edu", role = c("aut", "cre"))
+    person(given = "Nicholas",
+           family = "Gotelli",
+           role = c("aut", "cre"),
+           email = "ngotelli@uvm.edu")
 Maintainer: Nicholas Gotelli <ngotelli@uvm.edu>
 Description: Organizing code for large projects is challenging.
     This package provides functions for building useful sub-folders, creating
