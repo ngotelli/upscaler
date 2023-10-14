@@ -2,7 +2,7 @@
 % Please edit documentation in R/CreatePaddedLabel.R
 \name{create_padded_labels}
 \alias{create_padded_labels}
-\title{create_padded_labels}
+\title{Create a vector of labels}
 \usage{
 create_padded_labels(n = 6, string = "Toy", suffix = NULL)
 }

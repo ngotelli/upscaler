@@ -5,7 +5,7 @@
 # inputs: number of labels, character string, optional file name suffix
 # outputs: vector of labels (or file names)
 ########################################
-#' create_padded_labels
+#' Create a vector of labels
 #'
 #' Create a vector of character strings with padded, consecutive labels.
 
