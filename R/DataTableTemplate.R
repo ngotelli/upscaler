@@ -26,9 +26,9 @@ data_table_template <- function(data_frame=NULL,file_name=NULL) {
   # create example data frame
   if (is.null(data_frame)) {
     Species <- c("Species_A","Species_B")
-    Control <- signif(runif(2),digits=3)
-    Low <- signif(runif(2),digits=3)
-    High <- signif(runif(2),digits=3)
+    Control <- signif(stats::runif(2),digits=3)
+    Low <- signif(stats::runif(2),digits=3)
+    High <- signif(stats::runif(2),digits=3)
     data_frame <- data.frame(Species,Control,Low,High)
   }
 
@@ -38,7 +38,7 @@ data_table_template <- function(data_frame=NULL,file_name=NULL) {
   }
   if (file.exists(file_name)) stop(file_name," already exists!") else  {
     # set up data file and incorporate time stamp and minimal metadata
-    write.table(cat("# Table X. Table legend","\n",
+    utils::write.table(cat("# Table X. Table legend","\n",
                     "# ","\n",
                     "# timestamp: ",format(Sys.time(), "%d %B %Y %X"),"\n",
                     "# ------------------------", "\n",
@@ -49,7 +49,7 @@ data_table_template <- function(data_frame=NULL,file_name=NULL) {
                     sep=""))
 
     # now add the data frame
-    write.table(x=data_frame,
+    utils::write.table(x=data_frame,
                 file=file_name,
                 sep=",",
                 row.names=FALSE,

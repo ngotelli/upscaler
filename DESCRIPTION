@@ -20,3 +20,8 @@ LazyData: true
 URL: https://github.com/ngotelli/upscaler
 BugReports: https://github.com/ngotelli/upscaler/issues
 RoxygenNote: 7.2.3
+Imports: 
+    log4r,
+    sessioninfo,
+    stringr,
+    TeachingDemos
