@@ -2,20 +2,27 @@
 % Please edit documentation in R/DataTableTemplate.R
 \name{data_table_template}
 \alias{data_table_template}
-\title{Title}
+\title{Create a Template for an Annotated csv Data File}
 \usage{
 data_table_template(data_frame = NULL, file_name = NULL)
 }
 \arguments{
-\item{data_frame}{Name of data frame for template <keep as null>}
+\item{data_frame}{Name of the data frame to add to the template <keep as null>}
 
-\item{file_name}{Name of the csv data file filename.csv}
+\item{file_name}{Name of the csv data file, which will be saved to disk as filename.csv}
 }
 \value{
 named .csv
+     This template displays the data frame as a simple table
+     with minimal meta-data at the top, but the same format could
+     be greatly expanded to create a properly annotated data file
+     for long-term storage as a .csv file. Although a minor amount
+     of clean-up is usually needed, R will ignore lines that begin
+     with a hashtag, so the .csv file can be read with
+     the read.table() function.
 }
 \description{
-Title
+Generates a .csv file template for proper meta-data documentation in a data frame.
 }
 \examples{
 data_table_template()
