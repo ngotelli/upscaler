@@ -9,7 +9,7 @@
 #'
 #' Generates a .csv file template for proper meta-data documentation in a data frame.
 
-#' @param data_frame Name of the data frame to add to the template <keep as null>
+#' @param data_frame Name of the data frame to add to the template
 #' @param file_name Name of the csv data file, which will be saved to disk as filename.csv
 #'
 #' @return Named .csv file.

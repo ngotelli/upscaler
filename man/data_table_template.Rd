@@ -7,7 +7,7 @@
 data_table_template(data_frame = NULL, file_name = NULL)
 }
 \arguments{
-\item{data_frame}{Name of the data frame to add to the template <keep as null>}
+\item{data_frame}{Name of the data frame to add to the template}
 
 \item{file_name}{Name of the csv data file, which will be saved to disk as filename.csv}
 }
