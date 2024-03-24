@@ -13,13 +13,13 @@ data_table_template(data_frame = NULL, file_name = NULL)
 }
 \value{
 Named .csv file.
-     This template displays the data frame as a simple table
-     with minimal meta-data at the top, but the same format could
-     be greatly expanded to create a properly annotated data file
-     for long-term storage as a .csv file. Although a minor amount
-     of clean-up is usually needed, R will ignore lines that begin
-     with a hashtag, so the .csv file can be read with
-     the read.table() function.
+    This template displays the data frame as a simple table
+    with minimal meta-data at the top, but the same format could
+    be greatly expanded to create a properly annotated data file
+    for long-term storage as a .csv file. Although a minor amount
+    of clean-up is usually needed, R will ignore lines that begin
+    with a hashtag, so the .csv file can be read with
+    the read.table() function.
 }
 \description{
 Generates a .csv file template for proper meta-data documentation in a data frame.
