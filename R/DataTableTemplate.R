@@ -12,7 +12,7 @@
 #' @param data_frame Name of the data frame to add to the template <keep as null>
 #' @param file_name Name of the csv data file, which will be saved to disk as filename.csv
 #'
-#' @return named .csv
+#' @return Named .csv file.
 #'      This template displays the data frame as a simple table
 #'      with minimal meta-data at the top, but the same format could
 #'      be greatly expanded to create a properly annotated data file

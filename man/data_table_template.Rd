@@ -12,7 +12,7 @@ data_table_template(data_frame = NULL, file_name = NULL)
 \item{file_name}{Name of the csv data file, which will be saved to disk as filename.csv}
 }
 \value{
-named .csv
+Named .csv file.
      This template displays the data frame as a simple table
      with minimal meta-data at the top, but the same format could
      be greatly expanded to create a properly annotated data file
