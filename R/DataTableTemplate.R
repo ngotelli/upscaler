@@ -13,19 +13,17 @@
 #' @param file_name Name of the csv data file, which will be saved to disk as filename.csv
 #'
 #' @return Named .csv file.
-#'     This template displays the data frame as a simple table
-#'     with minimal meta-data at the top, but the same format could
-#'     be greatly expanded to create a properly annotated data file
-#'     for long-term storage as a .csv file. Use this function
+#'     Use this function
 #'     to create a .csv file for every summary table that will
 #'     be included in your manuscript or final project, even if
-#'     the data content is text. In this way your project will
+#'     the data content is text and non-numeric output.
+#'     In this way your project will
 #'     store all of the pieces of your work.
 #'     R will ignore lines that begin with a hashtag,
 #'     so the .csv file that is created by this function
 #'     could be read back into R with
-#'     read.table(file="ToyDataTable.csv,
-#'     header=TRUE,sep=",").
+#'     read.table(file="ToyDataTable.csv",
+#'     header=TRUE, sep=",").
 #'
 #' @export
 #'
