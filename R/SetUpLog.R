@@ -19,10 +19,11 @@
 #'  using the log messages to help debug a program and you want
 #'  to preserve a distinctly named log file every time the script is
 #'  executed. In this case, the file name has a 6 digit prefix
-#'  pre-pended to it in the form \emph{"HH.MM.SS.my_logfile"}.
+#'  pre-pended to it in the form \emph{"HHMMSS-my_logfile"}.
 #'  The six digits represents the hours (HH), minutes (MM),
-#'  and seconds (SS) taken from the time stamp, and the log file
-#'  name (either user supplied, or the default \emph{"logfile.txt"}
+#'  and seconds (SS) taken from the time stamp,
+#'  followed by a hyphen and the log file
+#'  name (either user-supplied, or the default \emph{"logfile.txt"}
 #'
 #' @return Creates log file.
 #'
@@ -37,13 +38,12 @@ set_up_log <- function(my_logfile='logfile.txt',
                        console_echo=FALSE,
                        overwrite_log=TRUE){
 
-  # my_logfile <<- 'logfile.txt'
   time_stamp <<- date()
   #------------------------ new fork
   if(overwrite_log==FALSE) {
   log_stamp <- substr(time_stamp,12,19)
-  log_stamp <- gsub(":", "-", log_stamp)
-  my_logfile <- paste0(log_stamp,my_logfile) }
+  log_stamp <- gsub(":", "", log_stamp)
+  my_logfile <- paste0(log_stamp,"-",my_logfile) }
   #---------------------------
   my_logfile <<- my_logfile
 

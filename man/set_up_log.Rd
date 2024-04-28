@@ -25,10 +25,11 @@ the log file should be overwritten (\code{TRUE}) or preserved
  using the log messages to help debug a program and you want
  to preserve a distinctly named log file every time the script is
  executed. In this case, the file name has a 6 digit prefix
- pre-pended to it in the form \emph{"HH.MM.SS.my_logfile"}.
+ pre-pended to it in the form \emph{"HHMMSS-my_logfile"}.
  The six digits represents the hours (HH), minutes (MM),
- and seconds (SS) taken from the time stamp, and the log file
- name (either user supplied, or the default \emph{"logfile.txt"}}
+ and seconds (SS) taken from the time stamp,
+ followed by a hyphen and the log file
+ name (either user-supplied, or the default \emph{"logfile.txt"}}
 }
 \value{
 Creates log file.
