@@ -11,8 +11,7 @@ Maintainer: Nicholas Gotelli <ngotelli@uvm.edu>
 Description: Organizing code for large projects is challenging.
     This package provides functions for building useful sub-folders, creating
     a time-stamped log file, building separate function files with templates,
-    constructing annotated .csv data files, quickly visualizing data and 
-    statistically testing data with a set of \code{qplot} functions, and more. 
+    constructing annotated .csv data files, and more. 
     Repetitive tasks in large projects can be batch-processed.
 License: GPL (>= 3)
 Encoding: UTF-8
@@ -23,5 +22,4 @@ RoxygenNote: 7.2.3
 Imports: 
     log4r,
     sessioninfo,
-    stringr,
-    TeachingDemos
+    stringr

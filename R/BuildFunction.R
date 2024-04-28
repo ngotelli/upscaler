@@ -9,6 +9,39 @@
 #   file name prefix (default="Functions/")
 # outputs: named script file(s) containing named function template(s)
 ########################################
+#' Create an R Script For a New Function
+#'
+#' @param function_name Vector of character strings of the names of
+#' functions to add. Each function name must be written in camel case
+#' formatting, with all lower case letters and words separated
+#' by a single underscore character (example: \emph{"my_function_name"}).
+#' Do not include function parentheses or other characters or spaces.
+#' @param file_name Optional file name for the R script that
+#' will contain function. If not provided,
+#' the file name will be created by converting the function name
+#' from camel case to Pascal Case. For example, the function name
+#' \code{my_function} will be converted to the file name \emph{"MyFunction"}.
+#' @param file_prefix Optional file prefix name, which would specify a
+#' folder address. If not provided, the default value is \emph{"Functions/"}.
+#' In other words, the file name becomes \emph{"Functions/MyFunction.R"},
+#'  which will be created in a subfolder called \emph{"Folders"}.
+#'  Folders is created with the default values of the \code{add_folders()}
+#'  function, which should be run first.
+#' @param file_suffix Optional file suffix name. The default suffix
+#' is .R, so this should usually not be changed. Beginning with the
+#' required function name \code{build_function("special_task")}
+#' would create a skeleton function script file called
+#' \emph{"SpecialTask.R"}, and this script file would be created
+#' inside of the \emph{"Functions"} folder.
+#'
+#' @return An R script file for each function name provided. Unless
+#' specified, these script files will be placed in the
+#' \emph{"Functions"} subfolder.
+#' @export
+#'
+#' @examples
+#' build_function("special_task")
+#' build_function("meta_data_notes,file_suffix=".txt")
 build_function <- function (function_name=NULL,
                              file_name=NULL,
                              file_prefix=NULL,
@@ -48,7 +81,7 @@ utils::write.table(cat("# --------------------------------------","\n",
                 "\n",
                 "\n",
                 "\n",
-                "return(message('...checking function: ",function_name[i],"()'))", "\n",
+                "return(print('...checking function: ",function_name[i],"()'))", "\n",
                 "\n",
                 "} # end of function ",function_name[i],"\n",
                 "# --------------------------------------","\n",
