@@ -37,6 +37,7 @@
 #' @return An R script file for each function name provided. Unless
 #' specified, these script files will be placed in the
 #' \emph{"Functions"} subfolder.
+#'
 #' @export
 #'
 #' @examples

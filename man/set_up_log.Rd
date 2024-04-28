@@ -10,7 +10,8 @@ set_up_log(my_logfile = "logfile.txt", console_echo = FALSE)
 \item{my_logfile}{Character string for log file name.
 Default is \emph{logfile.txt}.}
 
-\item{console_echo}{Simple toggle}
+\item{console_echo}{Calls function \code{echo_log_console()}. Default
+setting is \code{FALSE} so log messages are not toggled to console.}
 }
 \value{
 Creates log file.

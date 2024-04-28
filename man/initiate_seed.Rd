@@ -2,7 +2,7 @@
 % Please edit documentation in R/InitiateSeed.R
 \name{initiate_seed}
 \alias{initiate_seed}
-\title{Select, set, and store random number seed.}
+\title{Automatically Select, Set, and Store Random Number Seed}
 \usage{
 initiate_seed(user_seed = NULL)
 }
@@ -23,7 +23,7 @@ is internally stored, recorded, and passed
 to the \code{set.seed()} function.
 }
 \description{
-Select, set, and store random number seed.
+Automatically Select, Set, and Store Random Number Seed
 }
 \examples{
 \dontrun{

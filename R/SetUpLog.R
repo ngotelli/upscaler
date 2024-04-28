@@ -9,7 +9,8 @@
 #'
 #' @param my_logfile Character string for log file name.
 #' Default is \emph{logfile.txt}.
-#' @param console_echo Simple toggle
+#' @param console_echo Calls function \code{echo_log_console()}. Default
+#' setting is \code{FALSE} so log messages are not toggled to console.
 #'
 #' @return Creates log file.
 #'

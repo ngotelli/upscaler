@@ -5,7 +5,7 @@
 # inputs: none
 # outputs: my_seed
 ########################################
-#' Select, set, and store random number seed.
+#' Automatically Select, Set, and Store Random Number Seed
 #'
 #' @param user_seed Takes as input a random number seed from the user,
 #' stores it, and sets the random number seed with the \code{set.seed()}
