@@ -39,12 +39,14 @@ set_up_log <- function(my_logfile='logfile.txt',
 
   # my_logfile <<- 'logfile.txt'
   time_stamp <<- date()
-  log_stamp <- paste0(substr(format(time_stamp,"%H.%M.%s"),1,8),".")
   #------------------------ new fork
   if(overwrite_log==FALSE) {
-    my_logfile <- paste0(log_stamp,my_logfile) }
-  my_logfile <<- my_logfile
+  log_stamp <- substr(time_stamp,12,19)
+  log_stamp <- gsub(":", "-", log_stamp)
+  my_logfile <- paste0(log_stamp,my_logfile) }
   #---------------------------
+  my_logfile <<- my_logfile
+
   if (file.exists(my_logfile)) unlink(my_logfile)
   writeLines(c(paste('logfile:',my_logfile),
                paste('#######################'),
