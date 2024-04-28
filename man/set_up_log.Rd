@@ -4,7 +4,11 @@
 \alias{set_up_log}
 \title{Set Up Log File}
 \usage{
-set_up_log(my_logfile = "logfile.txt", console_echo = FALSE)
+set_up_log(
+  my_logfile = "logfile.txt",
+  console_echo = FALSE,
+  overwrite_log = TRUE
+)
 }
 \arguments{
 \item{my_logfile}{Character string for log file name.
@@ -12,6 +16,19 @@ Default is \emph{logfile.txt}.}
 
 \item{console_echo}{Calls function \code{echo_log_console()}. Default
 setting is \code{FALSE} so log messages are not toggled to console.}
+
+\item{overwrite_log}{Logical variable that specifies whether
+the log file should be overwritten (\code{TRUE}) or preserved
+ with a unique file name that is pre-pended with a time stamp (\code{FALSE}). The default is \code{TRUE}, so there is a
+ single log file whose contents are refreshed very time the
+ script is run. Change this to \code{FALSE} only if you are
+ using the log messages to help debug a program and you want
+ to preserve a distinctly named log file every time the script is
+ executed. In this case, the file name has a 6 digit prefix
+ pre-pended to it in the form \emph{"HH.MM.SS.my_logfile"}.
+ The six digits represents the hours (HH), minutes (MM),
+ and seconds (SS) taken from the time stamp, and the log file
+ name (either user supplied, or the default \emph{"logfile.txt"}}
 }
 \value{
 Creates log file.

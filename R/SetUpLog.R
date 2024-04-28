@@ -11,6 +11,18 @@
 #' Default is \emph{logfile.txt}.
 #' @param console_echo Calls function \code{echo_log_console()}. Default
 #' setting is \code{FALSE} so log messages are not toggled to console.
+#' @param overwrite_log Logical variable that specifies whether
+#' the log file should be overwritten (\code{TRUE}) or preserved
+#'  with a unique file name that is pre-pended with a time stamp (\code{FALSE}). The default is \code{TRUE}, so there is a
+#'  single log file whose contents are refreshed very time the
+#'  script is run. Change this to \code{FALSE} only if you are
+#'  using the log messages to help debug a program and you want
+#'  to preserve a distinctly named log file every time the script is
+#'  executed. In this case, the file name has a 6 digit prefix
+#'  pre-pended to it in the form \emph{"HH.MM.SS.my_logfile"}.
+#'  The six digits represents the hours (HH), minutes (MM),
+#'  and seconds (SS) taken from the time stamp, and the log file
+#'  name (either user supplied, or the default \emph{"logfile.txt"}
 #'
 #' @return Creates log file.
 #'
@@ -22,11 +34,17 @@
 #' }
 #'
 set_up_log <- function(my_logfile='logfile.txt',
-                       console_echo=FALSE){
+                       console_echo=FALSE,
+                       overwrite_log=TRUE){
 
-  my_logfile <<- 'logfile.txt'
+  # my_logfile <<- 'logfile.txt'
   time_stamp <<- date()
-
+  log_stamp <- paste0(substr(format(time_stamp,"%H.%M.%s"),1,8),".")
+  #------------------------ new fork
+  if(overwrite_log==FALSE) {
+    my_logfile <- paste0(log_stamp,my_logfile) }
+  my_logfile <<- my_logfile
+  #---------------------------
   if (file.exists(my_logfile)) unlink(my_logfile)
   writeLines(c(paste('logfile:',my_logfile),
                paste('#######################'),
