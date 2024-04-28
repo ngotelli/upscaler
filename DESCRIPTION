@@ -22,4 +22,5 @@ RoxygenNote: 7.2.3
 Imports: 
     log4r,
     sessioninfo,
-    stringr
+    stringr,
+    utils
