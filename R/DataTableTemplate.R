@@ -28,7 +28,9 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' data_table_template()
+#' }
 #'
 data_table_template <- function(data_frame=NULL,file_name=NULL) {
 

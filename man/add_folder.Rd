@@ -24,6 +24,8 @@ Set of folders created in the current location.
 Create Folders
 }
 \examples{
+\dontrun{
 add_folder()
 add_folder(folder_names=c("MyFolder","MyFolder2"))
+}
 }

@@ -29,6 +29,8 @@ Named .csv file.
 Generates a .csv file template for proper meta-data documentation in a data frame.
 }
 \examples{
+\dontrun{
 data_table_template()
+}
 
 }

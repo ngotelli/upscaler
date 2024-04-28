@@ -21,8 +21,10 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' add_folder()
 #' add_folder(folder_names=c("MyFolder","MyFolder2"))
+#' }
 
 # function body
 

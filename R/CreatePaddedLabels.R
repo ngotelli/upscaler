@@ -21,9 +21,11 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' create_padded_labels()
 #' create_padded_labels(n = 4,string = "Species")
 #' create_padded_labels(n = 7,string= "Site" ,suffix = ".csv")
+#' }
 create_padded_labels <- function(n=6,
                                  string="Toy",
                                  suffix=NULL) {

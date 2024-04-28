@@ -24,7 +24,9 @@ Vector of character strings with consecutive, padded labels.
 Create a vector of character strings with padded, consecutive numbering.
 }
 \examples{
+\dontrun{
 create_padded_labels()
 create_padded_labels(n = 4,string = "Species")
 create_padded_labels(n = 7,string= "Site" ,suffix = ".csv")
+}
 }
