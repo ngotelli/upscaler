@@ -46,3 +46,10 @@ specified, these script files will be placed in the
 \description{
 Create an R Script For a New Function
 }
+\examples{
+\dontrun{
+build_function("special_task")
+build_function("meta_data_notes",file_suffix=".txt")
+}
+
+}

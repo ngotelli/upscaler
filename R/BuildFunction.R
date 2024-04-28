@@ -42,8 +42,9 @@
 #' @examples
 #' \dontrun{
 #' build_function("special_task")
-#' build_function("meta_data_notes,file_suffix=".txt")
+#' build_function("meta_data_notes",file_suffix=".txt")
 #' }
+#'
 build_function <- function (function_name=NULL,
                              file_name=NULL,
                              file_prefix=NULL,
