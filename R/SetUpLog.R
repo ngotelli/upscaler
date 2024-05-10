@@ -38,9 +38,8 @@ set_up_log <- function(my_logfile='logfile.txt',
                        console_echo=FALSE,
                        overwrite_log=TRUE){
 
-  #------------------------ new fork
   if(!exists("my_seed"))initiate_seed()
-  #---------------------------
+
   time_stamp <<- date()
   if(overwrite_log==FALSE) {
   log_stamp <- substr(time_stamp,12,19)
@@ -59,7 +58,7 @@ set_up_log <- function(my_logfile='logfile.txt',
                paste('timestamp:',date()),
                paste('#----------------------'),
                paste('libraries loaded:'),
-               # paste(paste(sessioninfo::package_info("attached")$package),collapse=" "),
+               paste(paste(sessioninfo::package_info("attached")$package),collapse=" "),
                paste('#######################')),
              my_logfile)
 
