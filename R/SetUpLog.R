@@ -39,7 +39,7 @@ set_up_log <- function(my_logfile='logfile.txt',
                        overwrite_log=TRUE){
 
   #------------------------ new fork
-  if(!file.exists(my_seed))initiate_seed()
+  if(!exists("my_seed"))initiate_seed()
   #---------------------------
   time_stamp <<- date()
   if(overwrite_log==FALSE) {
