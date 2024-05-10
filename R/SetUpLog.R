@@ -38,13 +38,14 @@ set_up_log <- function(my_logfile='logfile.txt',
                        console_echo=FALSE,
                        overwrite_log=TRUE){
 
-  time_stamp <<- date()
   #------------------------ new fork
+  if(!file.exists(my_seed))initiate_seed()
+  #---------------------------
+  time_stamp <<- date()
   if(overwrite_log==FALSE) {
   log_stamp <- substr(time_stamp,12,19)
   log_stamp <- gsub(":", "", log_stamp)
   my_logfile <- paste0(log_stamp,"-",my_logfile) }
-  #---------------------------
   my_logfile <<- my_logfile
 
   if (file.exists(my_logfile)) unlink(my_logfile)
