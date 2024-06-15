@@ -24,3 +24,7 @@ Imports:
     sessioninfo,
     stringr,
     utils
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
