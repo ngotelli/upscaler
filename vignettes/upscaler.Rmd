@@ -21,5 +21,73 @@ library(upscaler)
 #### Introduction to `upscaler`
 The `upscaler` package grew out of the need to teach Computational Biology students how to move beyond "single script" programming and build larger programs that operate on multiple files and call on separate scripts. No matter how large or small the project, code should be organized to create a reproducible research pipeline, so that all of the numerical input and output for a project can be reproduced, and the work can be reliably repeated if there are changes to the data or extensions of the code. `upscaler` follows the general principles of functional programming, providing a small collection of R functions to reduce overhead and more easily document code and procedures. 
 
+This vignette describes how to use each of the functions available in `upscaler` to improve the organization and reproducability of your project. 
+
 #### Acknowledgements
 Package development was supported by NSF grant 2019470 RII Track-2 FEC : Harnessing Spatiotemporal Data Science to Predict Responses of Biodiversity and Rural Communities under Climate Change (co-PIs Brian J. McGill and Nicholas J. Gotelli). The functions were first presented at a Data Science Skill-building Bootcamp offered through the grant in June of 2022. I thank Alex Burnham, Leo Edminster-Cyr, Laurent Hebert-Dufrense, Matt Dube, Matt Kling, Bailey McLaughlin, Brian McGill, Tim Waring, and the entire `barracuda` team (**B**iodiversity **a**nd **R**ural **R**esponse to **C**limate **C**hange **U**sing **D**ata **A**nalysis) for advice and improvements to the code.
+
+### Organizing your project with `addfolder()`
+
+The first step in building an organized project is to structure it with a useful set of subfolders. The default pointer in R is always to the root of a project folder, so we have a tendency to dump everything in there, and it quickly becomes a cluttered storage area. 
+
+First, make sure you have loaded upscaler into memory by issuing the following command from the console:
+
+```{r, eval=FALSE}
+library(upscaler)
+```
+
+Next, move to the root of the project you are working in and give the following command, again from the console:
+
+```{r, eval=FALSE}
+add_folder()
+```
+This will create a set of useful folders to store the different pieces of your work. If you don't like the default folder titles, just supply your own:
+
+```{r, eval=FALSE}
+add_folder(c("myfolderA","myfolderB","myfolderC"))
+
+```
+
+Each "empty" folder created by `add_folder()` actually contains an empty (and hidden) file called `.keep`. The reason for this is to get around the irritating feature of github that it will erase any folder you have in your project that does not contain a file or object. That is because github only recognizes folder names to the extent that they are part of the relative path to an object that is stored in the repository. As a safety precaution, `add_folder()` always checks to make sure the folder it is about to add does not already exist in the repository, in which case it will abort and give a warning message that the folder already exists. So you will never accidentally over-write anything by using `add_folder()`.
+
+Here are some comments on how to use each of the folders you have now created
+
+#### `OriginalData` Folder
+
+This folder should contain the original data files, in whatever native file type you receive them. That is the only thing that should be placed in this folder. If you are dealing with large data sets that cannot be stored locally, then you need to include a plain text file that has the appropriate link and whatever other information is needed to construct a breadcrumb trail that will take you back to the data you are using. An important principle you should adhere to is to never ever edit or modify anything once you put it in this folder. You also will never read or use any of these objects. Instead, you will first copy them to:
+
+#### `CleanedData` Folder
+
+Here is where the work begins of converting these files from their original "dirty" state into a "clean" state. Clean files are those that can be opened with a `read.table()` command in R. Getting files into the clean state sometimes takes a lot of work, and it can be hard to document your changes carefully, especially if you are using powerful tools like regular expressions. So you may want to include a plain-text file that explains what you did to modify these files from their source versions that are stored in the `OriginalData` folder.
+
+You should make minimal changes in this part of your work, just enough so that the files can be opened. In your other scripts, you will probably need to wrangle these data to get them into the correct layout for analysis (especially common is the need to convert from the wide to the long format). And even when you have them opened and in the correct format, you need to check them to make sure they do not contain bad data or problems such as errant characters in columns of numeric data, or incorrectly coded or labeled NA values. Again, these kinds of changes can be difficult to properly document, but do your best so that, if someone started over with the files from the `OriginalData` folder, they could get them into the state that you have them in the `CleanData` folder. And remember, don't edit anything in the `OriginalData` folder. Always work with a copy placed in the `CleanData` folder before you start doing anything. 
+
+#### `Scripts` Folder
+
+Here is where you will keep the primary R scripts for your project. People's coding styles differ greatly, and you can use as many or as few scripts as you like to get the work done. You can never have too much annotation in those scripts, so CTRL-SHIFT-C should become your new best friend as you write and debug your code. Scripts that are created by your collaborators should also be stored here, possibly with some other folder structure if it starts getting too messy. 
+
+Personally, I like to use a single `MainScript.R` that I store in the root of the project. This script calls all of the libraries I use, sources all of the functions, and executes the individual script files contained in these folders. Remember that since the R is pointing to the root of your project, it is easy to source scripts inside your subfolder with this format:
+
+```{r, eval=FALSE}
+source("Scripts/MyScript.R")
+```
+
+As you will see, `MainScript.R` is also a good place to set up the log-file system that is part of `upscaler`. If you do it this way, no matter what changes or additions you make to your project, you can recreate everything just by sourcing `MainScript.R` without having to worry about which of the individual scripts need to be run again.
+
+#### `Functions` Folder
+
+I have found that I like to create a separate script for every function I build, and store them all here. This really promotes functional programming and breaking down a complex task into distinct pieces, coding those elements in isolation, and then linking them all up to build a complex program. The main disadvantage of this approach is the overhead and time associated with setting up and naming individual function files. As you will see, `upscaler` gives you some tools (`build_function()` and `source_batch()`) that will eliminate the repetitive work.
+
+#### `Plots` Folder
+
+I like to dump all of the graphic output (.png,.pdf.tiff, etc.) files that are created by code in this location. You should always use `ggsave()` and other commands to create graphic output rather than using the GUI interface (which is simpler, but does not make your work fully reproducible). 
+
+#### `Outputs` Folder
+
+Any .csv files or other non-graphic objects that are created by your code should be placed here. For manuscript assembly, I also like to put in here a .csv version of any table that is going in to my manuscript, even one that contains only text. In this way, all the pieces of the publication live and travel together in the R project. As a general rule, you should avoid generating and transmitting .csv data files other than those that you set up in the `CleanedData` folder.
+
+#### `DataObjects` Folder
+ Instead of passing around data in .csv files, you should create an R 
+
+
+#### `Markdown` Folder
