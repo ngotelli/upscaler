@@ -19,15 +19,19 @@ library(upscaler)
 ```
 
 # Introduction to `upscaler`
+
 The `upscaler` package grew out of the need to teach Computational Biology students how to move beyond "single script" programming and build larger programs that operate on multiple files and call on separate scripts. No matter how large or small the project, code should be organized to create a reproducible research pipeline, so that all of the numerical input and output for a project can be reproduced, and the work can be reliably repeated if there are changes to the data or extensions of the code. `upscaler` follows the general principles of functional programming, providing a small collection of R functions to reduce overhead and more easily document code and procedures. 
 
 This vignette describes how to use each of the functions available in `upscaler` to improve the organization and reproducability of your project. 
 
 # Acknowledgements
+
 Package development was supported by NSF grant 2019470 RII Track-2 FEC : Harnessing Spatiotemporal Data Science to Predict Responses of Biodiversity and Rural Communities under Climate Change (co-PIs Brian J. McGill and Nicholas J. Gotelli). The functions were first presented at a Data Science Skill-building Bootcamp offered through the grant in June of 2022. I thank Alex Burnham, Leo Edminster-Cyr, Laurent Hebert-Dufrense, Matt Dube, Matt Kling, Bailey McLaughlin, Brian McGill, Tim Waring, and the entire `barracuda` team (**B**iodiversity **a**nd **R**ural **R**esponse to **C**limate **C**hange **U**sing **D**ata **A**nalysis) for advice and improvements to the code.
 
 
 # Helper & Template Functions
+
+These functions create files and folders that are useful for organizing the scripts, functions, data files, and outputs that you will create for your project.
 
 ## Organize your project with `addfolder()`
 
@@ -107,7 +111,7 @@ z <- create_padded_labels(n=10,string="Species",suffix=".txt")
 print(z)
 ```
 
-## Create a csv file for a data frame with `data_table_template()`
+## Create a plain-text .csv file for a data frame with `data_table_template()`
 
 When you are working on a project from which you will create a manuscript draft, it is a good idea to keep all of the tables and the graphs together in your project. The `data_table_template()` lets you import any data frame (even one that just contains text) and convert it to a .csv. You specify to the function the name of your data frame and the name of the output file. For example:
 
@@ -131,11 +135,11 @@ If you call this function with no inputs (`data_table_template()`), it creates a
 
 Since R will strip out the lines that start with a hash tag, this .csv file can be opened with `read.table()`. But the more important use is to store in your project of all the tabled data (text or numbers) that will eventually appear as elements in your manuscript.
 
-## Embed your critical meta data within your .csv file with `metadata_template()`
+## Annotate and embed critical metadata in your plain-text .csv file with `metadata_template()`
 
-An epic challenge in science is recording sufficient meta-data so that, in the future, you and others can understand and use the data that you have collected in the past. In the past, researchers agonized over how meta-data could be recorded in a universal way that would be accessible to others, but data sets are unique and defy the best efforts to create templates that are useful. AI is hepful here because we can now use free-form text narratives, written in the authors' native language, that can then be captured by data mining. Public data repositories always have a place to store your meta-data, but the fatal flaw is that those meta-data are often not stored in the same object as the data themselves. When that happens, the chain is broken because the data are worthless without the file containing the metadata.
+An epic challenge in science is recording sufficient metadata so that, in the future, you and others can understand and use the data that you have collected in the past. Previously, researchers agonized over how metadata could be recorded in a universal way that would be accessible to others, but fast and convenient for scientists to enter. However, data and their metadata are unique and defy the best efforts to create templates that are useful (and usable). AI is hepful here because we can now use free-form text narratives, written in the authors' native language, that can then be captured by data mining. Public data repositories always have a place to store your meta-data, but the fatal flaw is that those metadata are often not stored in the same object as the data themselves. When that happens, the chain is broken because the data are worthless without the file containing the metadata.
 
-The upscaler function `metadata_template` creates and timestamps a simple .csv file with some suggested elements that you typically need to properly annotate a data frame. This material lives behind hash tags, so both the meta-data and the data themselves will live together in the same .csv file. You should freely modify this template to suit your own needs, but the important thing is to have that meta-data embedded in the .csv file. A bit of editing will probably also be needed to open this file with `read.table()`, but the far more time-consuming task will be writing the meta-data descriptions.
+The upscaler function `metadata_template` creates and timestamps a simple .csv file with some suggested elements that you typically need to properly annotate a data set. This material lives behind hash tags, so both the metadata and the data travel together in the same plain-text .csv file. You should freely modify this template to suit your own needs, but the important thing is to have that metadata embedded in the .csv file. A bit of editing may be needed to open this file with `read.table()`, but the far more time-consuming task will be writing the meta-data descriptions.
 
 The only input you need to use `metadata_template()` is the file name. Use it like this:
 
@@ -143,7 +147,7 @@ The only input you need to use `metadata_template()` is the file name. Use it li
 metadata_template("MyAnnotatedData.csv")
 ```
 
-If you don't supply the file name, the function will create a file called "MetaDataTemplate.csv". Here is what it contains:
+If you don't supply the file name, `metadata_template()` will create a file called "MetaDataTemplate.csv". Here is what it contains:
 
 ```
 #//////////////////////////////
@@ -192,5 +196,308 @@ ID,VarOne,VarTwo,VarThree,TextNotes
 #---END OF DATA---
 ```
 
-This file can be successfully opened with `read.table()`, but only the single line beginning with ID,VarOne... is actually read in. That row would function as the list of comma-separated variable names, and each subsequent row would contain the comma-separated data entries.
+This file can be successfully opened with `read.table()`, but only the single line beginning with ID,VarOne... is actually read in. In an actual data set, that line would function as the list of comma-separated variable names, and each subsequent line would contain the comma-separated data entries.
+
+# Logging Functions
+
+These functions set up a log file that is refreshed each time you run the code in your project. The log file is a plain-text file that (which is built from the `log4r` package) that contains important metadata about your project at time you run your code. You can easily add time stamps and messages to any line of your code that will be recorded in the log file.
+
+There are three reasons for incorporating logging functions into your workflow. The first is to increase the over all readability of the code and its operations. By introducing log messages at different points in the code as annotations, it is easy to read the log file and get a sense of the operations that the program is carrying out. For example, you could trigger a log message to be written every time a particular function is executed.
+
+The second reason for incorporating logging functions into your workflow is so that you can get your code to run successfully in the future. The R language has a fairly high "mutation rate", and it is not uncommon for scripts that ran correctly 6 months or a year ago to begin generating errors because of incremental changes in the most recent version of R. When that happens, you can turn to the information in your log file, which includes a time-stamp, the random number seed, and information on your operating system, computer, R version, and active packages at the time of the run. This information can often help to revive older scripts that no longer work.
+
+The third reason for incorporating logging functions is to use them as a tool for debugging. No matter when or how your program crashes, the log-file will be saved and will preserve all log messages that were entered up until the crash point. If the plane goes down, this is your black-box for figuring out exactly where the error occurred. For large programs with multiple scripts, that may be difficult or impossible to do without a log file.
+
+In the default state, the log file is set up at the very start of the program, so the log-file is replaced with a new copy (which records the time stamp) every time you rum the program. However, if you are using the logger to debug an error, it would not be helpful if the log file over-writes itself every time you run the code. For these situations, upscaler provides an option so that the name of the log file includes a unique character string that is taken from the system clock. In this way, there is a unique trace that is retained every time you run the code.
+
+## Create a log file with `set_up_log()`
+
+This function should be called at the very beginning of your code:
+
+```{r, eval=FALSE}
+library(upscaler)
+set_up_log()
+```
+In the default state, this will immediately create the file `logfile.txt` and place it in the root the project directory. To change the name and/or location of the log file, use 
+
+```{r, eval=FALSE}
+set_up_log(my_logfile="path\to\logfilename")
+```
+
+Here is an example of the initial contents of a log file:
+
+```
+logfile: logfile.txt
+#######################
+R version: R version 4.2.2 (2022-10-31)
+platform: x86_64-apple-darwin17.0 (64-bit)
+running: macOS 14.5
+#----------------------
+random number seed: 134925437
+timestamp: Thu Jul  4 18:55:51 2024
+#----------------------
+libraries loaded:
+ggplot2 upscaler
+#######################
+```
+
+Each time you run the set-up command, the log file will be refreshed and over-written, which means the timestamp and the random number seed will be different. This is fine for normal operations, but if you are using the log to try and debug your code, you may want to preserve every version of the log file that is created. In that case, use this for the set up:
+
+```{r, eval=FALSE}
+
+set_up_log(overwrite_log=FALSE)
+```
+
+This set up does not change any of the log contents, but a new log file is created every time the script is run. For example, here are the logfile names for 3 runs of a script:
+
+```
+190322-logfile.txt
+190322-logfile.txt
+190322-logfile.txt
+```
+The unique 6-digit code is created from the system clock and represents the hours minutes and seconds (HHMMSS) at the time the log file is built.
+
+The last option you can change in the set up of your log file is whether the log messages will be sent only to the log file (the default) or also echoed to the console output in R. To set up the log file to echo all of the messages, use:
+
+```{r, eval=FALSE}
+set_up_log(echo_log_console=TRUE)
+```
+
+## Toggle the console log file echo with `echo_log_console()`
+
+Although the console echo is controlled in the initial `set_up_log()` function, you can toggle it on or off at any point in your code by using
+
+```{r, eval=FALSE}
+echo_log_console(TRUE)
+echo_log_console(FALSE)
+```
+Remember that log messages and time stamps will always be sent to the log file, regardless of whether or not they are echoed to the console.
+
+## Send time stamps and log messages to the log file with `l()`
+
+The `l()` function is used to quickly add a time stamp and message to the log file anywhere in your code. If you call it with no input, it will just generate a time stamp. With a character string as input, it will pass the message and its time stamp to the log.
+
+For example, here are two calls to the `l()` function:
+
+```{r eval=FALSE}
+l()
+l('Send a message to the log file')
+
+```
+
+and here is what shows up in the log file:
+
+```
+logfile: logfile.txt
+#######################
+R version: R version 4.2.2 (2022-10-31)
+platform: x86_64-apple-darwin17.0 (64-bit)
+running: macOS 14.5
+#----------------------
+random number seed: 134925437
+timestamp: Thu Jul  4 19:43:53 2024
+#----------------------
+libraries loaded:
+ggplot2 upscaler
+#######################
+INFO  [04-Jul 19:44:22] 
+INFO  [04-Jul 19:44:48] Send a message to the log file
+```
+Log messages will continue to be appended to the existing log file until a fresh call is made to `set_up_log()`, which would wipe the slate clean and start with a new log file.
+
+## Manually set the random number seed for the log file with `initiate_seed()`
+
+The log file always records the random number seed for the particular run, which itself is a large, randomly chosen integer value $\pm  \times 10^9$. Many programmers are familiar with the R function `set.seed()`, which allows users to manually set the random number seed to reproduce code results that call on the random number generator. However, most users of `set.seed()` are not choosing a random 10 digit integer, and are probably only using "random" numbers from a tiny slice of the available seeds.
+
+The `initiate_seed()` function in upscaler uses `set.seed()` but grabs a single integer from the entire possible range. Under the hood, this function is called by `set_up_log()`, and that is the seed value that is recorded in the log file. If you want to use that same seed in another run to produce identical results, you need to use the `initiate_seed()` function before you set up your log file. Thus, the code at the very start of your program would be:
+
+```{r,eval=FALSE}
+library(upscaler)
+initiate_seed(1950) #user provides the input seed
+set_up_log()
+
+```
+
+Once your code is all running properly, run it one more time for a final, archival version. Then take the random number seed from the log file, and add in the `initiate_seed()` as shown above. Now your code will generate identical results every time you run it, even though it is making calls to the random number generator.
+
+## Monitor for loops with `show_progress_bar()`
+
+Complex programs often involve long repetitive loops, especially for stochastic simulations or the processing of multi-file data sets. It can be hard to monitor programs that take a long time to run, and it is important to know when a program is slowing down or getting stuck in execution. 
+
+There are several existing R packages that can be used to create a progress bar. But this particular function is designed to send its output to the log file. This means if your program crashes inside of a for loop, you will be able to pinpoint the particular cycle where failure occurred. The progress bar is also a retro throwback to the days of CRT (Cathode-Ray Terminal) computer screens. In a nutshell, this progress bar simply prints a dot `.` to the console and the log file every time it completes a cycle inside of a for loop. Here is a simple example:
+
+```{r,eval=FALSE}
+for (k in 1:100) {
+  show_progress_bar(index=k)
+  Sys.sleep(0.075)
+}
+
+l('end of loop')
+
+```
+
+And now the log file shows:
+
+```
+.........10.........20.........30.........
+40.........50.........60.........70.........
+80.........90.........100
+INFO  [04-Jul 20:52:45] end of loop
+
+```
+
+To keep things tidy, add a log message after the loop so that a line feed is passed to the log file. In its most basic form, the only input needed to the progress bar is the index for the looping variable (in this case, we used the variable `k`). This progress bar is very useful for slower programs because you can monitor progress in real time. It functions similar to a hospital cardiac monitor, which allows a nurse to superficially check in on a patient by scanning the output screen. Whether or not the log messages are echoed to the console, the progress bar always prints to the console (and the log file).
+
+Now let's see how this works if there is a code error that occurs inside of the loop:
+
+```{r, eval=FALSE}
+for (k in 1:100) {
+  show_progress_bar(k)
+  Sys.sleep(0.075)
+   if(k==52)print(ghost) # this throws an error!
+}
+l('end of loop with error')
+
+```
+
+And here is the final entry in the log file:
+```
+.........10.........20.........30.........40.........50..
+```
+
+Note that the final line of code (`l('end of loop with error')` did not execute because the error stopped the program imside the for loop. Nevertheless, we can see from the log file that the problem occurred when the value of k reached 52.
+
+Finally, there are two other parameters that we can adjust in the `show_progress_bar` function that control the integer value that is printed out (counter) and the number of cycles that are represented by each screen dot (dot). It is useful to adjust these parameters for very long loops so that you do not run into problems with the screen buffer for printing. Here is an example of a loop with 1000 cycles. The integer counter prints every 50 cycles, and each dot represents 5 cycles:
+
+```{r, eval=FALSE}
+for (k in 1:1000) {
+  show_progress_bar(index=k,counter=50,dot=5)
+  Sys.sleep(0.0075)
+}
+l('end of long loop')
+```
+
+In our log file, we see:
+
+```
+.........10.........20.........30.........
+40.........50...........50.........100.........
+150.........200.........250.........300.........
+350.........400.........450.........500.........
+550.........600.........650.........700.........
+750.........800.........850.........900.........
+950.........1000
+INFO  [04-Jul 21:12:10] end of long loop
+```
+# Batch Processing And Function Construction
+
+`upscaler` includes two simple, but powerful, functions that are designed to help you make the transition from writing single scripts that work reasonably well for small, simple tasks to writing multiple function scripts that work very well for large, complex tasks.
+
+We begin with the idea of pseudocode, and the notion that a large, complex process needs to be broken down into smaller parts that can be coded initially in isolation, and then linked together through the use of common inputs and outputs that are shared between functions.
+
+Suppose you are thinking about dinner at the end of your day. To make your dinner, you are going to have to put together a shopping list, buy some groceries, and then cook the meal. There may be many other pieces and subtasks, but this is a reasonable start: break down a complex process into a list of less than 10 steps. For each of the 3 functions in our dinner example, you are going to create, name, and save an individual R script that contains a skeleton function. The skeleton function can be sourced and run. It works, but it initially doesn't do anything but print a message to the screen. 
+
+As we will see, we can batch process these operations, which will really speed up the process so that we can get to work doing the actual coding.
+
+## Create function skeletons with `build_function()`
+
+In order to build functions, we first need to name them. For your function names, it is important for you to use what is called "snake case" formatting. There are only two rules:
+1) function names use only lower case letters
+2) words are separated by a lower-case underscore (like_this)
+
+Here is the code we need:
+
+```{r, eval=FALSE}
+build_function(c('make_shopping_list',
+                 'buy_groceries',
+                 'cook_meal'))
+```
+
+The only essential input to `build_function()` is a vector of character strings, each with snake_case_formatting. This function will then create and name 3 R scripts that will be created within your `Functions` folder (which itself is created when you run `add_folder()` in your project).
+
+There are 3 other options in build_function that we will not use. The first seconis for the file_name, but we will stick with the default, which builds the file name automatically from the specified function name. The second option is for the file_prefix, which would allow you to specify a subfolder or address where the files should be built. We will again use the default, which places these functions inside your Functions folder. The third options is for the file_suffix. We will again stay with the default, which is to create R script files (*.R). The options provide you with flexibility, but unless you are doing something fancy, stick with the defaults and simply provide the names of the functions you want to create.
+
+If we go now to the `Functions` folder, we will see it contains the following R scripts:
+
+```
+MakeShoppingList.R
+BuyGroceries.R
+CookMeal.R
+```
+
+Let's take a peek at the `MakeShoppingList.R` script:
+
+```
+# --------------------------------------
+# FUNCTION make_shopping_list
+# required packages: none
+# description:
+# inputs:
+# outputs:
+########################################
+make_shopping_list <- function(x=NULL,y=NULL){
+
+# assign parameter defaults
+if (is.null(x) | is.null(y)) {
+  x <- runif(10)
+  y <- runif(10)
+}
+
+# function body
+
+
+
+return(print('...checking function: make_shopping_list()'))
+
+} # end of function make_shopping_list
+# --------------------------------------
+# make_shopping_list()
+```
+
+The script begins with some annotations where you will describe the inputs and outputs to your function. Next, the function is created with two fake inputs, x, and y. Nothing actually happens in the bpdy of the function, but it does return a short message: `...checking function: make_shopping_list()`. At the end of the function body, there is a final line of code, which is commented out. That last line is set up to run the function once it has been loaded into memory.
+
+So, your single command to `build_function()` sets up a template and creates an R script for each of the functions you want to build. This allows you to begin functional programming, but eliminates a lot of the tedious overhead associated with naming and building function files in a consistent format.
+
+## Source multiple R script files in a folder with `batch_source()`
+
+Now that we have created R scripts for each of our functions, let's source them in memory so we can start using them. To do so, we use the `batch_source()` function, and point it to a particular *folder* that has the scripts we want to source:
+
+```{r, eval=FALSE}
+source_batch("Functions")
+```
+
+When we run this we see the following messages printed to the console:
+
+```
+File "Functions/BuyGroceries.R" sourced.
+File "Functions/CookMeal.R" sourced.
+File "Functions/MakeShoppingList.R" sourced.
+```
+
+This tells us that all 3 R scripts were successfully sourced, which means that our new functions are now loaded into memory.
+
+The next step is to go ahead and run them, using the following lines of code:
+
+```{r, eval=FALSE}
+
+make_shopping_list()
+buy_groceries()
+cook_meal()
+
+```
+
+and here is our output:
+
+```
+[1] "...checking function: make_shopping_list()"
+[1] "...checking function: buy_groceries()"
+[1] "...checking function: cook_meal()"
+```
+
+Note the important distinction between sourcing a script file (`source("Functions/MakeShoppingList.R")`), which loads a function into memory, and running then running the actual function (`make_shopping_list()`).
+
+The skeleton functions run, but they don't have any inputs or outputs, and they do not interact with each other. Now the real coding work begins, in which you specify the inputs and the outputs, write the lines of code for each function, and then link them in a main script by calling the functions with the inputs and outputs they create and use.
+
+The purpose of the upscaler functions is to remove a lot of the overhead associated with this kind of functional programming and to help you organize the folders and files you will need for a large, complex programs. Happy coding!
+
 
