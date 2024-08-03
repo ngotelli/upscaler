@@ -11,32 +11,36 @@
 ########################################
 #' Create an R Script For a New Function
 #'
-#' @param function_name Vector of character strings of the names of
-#' functions to add. Each function name must be written in camel case
-#' formatting, with all lower case letters and words separated
-#' by a single underscore character (example: \emph{"my_function_name"}).
-#' Do not include function parentheses or other characters or spaces.
-#' @param file_name Optional file name for the R script that
-#' will contain function. If not provided,
-#' the file name will be created by converting the function name
-#' from camel case to Pascal Case. For example, the function name
-#' \code{my_function} will be converted to the file name \emph{"MyFunction"}.
-#' @param file_prefix Optional file prefix name, which would specify a
-#' folder address. If not provided, the default value is \emph{"Functions/"}.
-#' In other words, the file name becomes \emph{"Functions/MyFunction.R"},
-#'  which will be created in a subfolder called \emph{"Folders"}.
-#'  Folders is created with the default values of the \code{add_folders()}
-#'  function, which should be run first.
-#' @param file_suffix Optional file suffix name. The default suffix
-#' is .R, so this should usually not be changed. Beginning with the
-#' required function name \code{build_function("special_task")}
-#' would create a skeleton function script file called
-#' \emph{"SpecialTask.R"}, and this script file would be created
-#' inside of the \emph{"Functions"} folder.
+#' Creates one or more template files for new functions in a designated folder.
+#' By default, templates will be saved in the \emph{"Functions/"} folder, as
+#' created by the \code{\link{add_folder}} function.
 #'
-#' @return An R script file for each function name provided. Unless
-#' specified, these script files will be placed in the
-#' \emph{"Functions"} subfolder.
+#' @param function_name Vector of character strings of the names of functions to
+#'   add. Each function name must be written in snake case formatting, with all
+#'   lower case letters and words separated by a single underscore character
+#'   (example: \emph{"my_function_name"}). Do not include function parentheses
+#'   or other characters or spaces.
+#' @param file_name Optional file name for the R script that will contain
+#'   function. If not provided, the file name will be created by converting the
+#'   function name from snake case to Pascal (Upper Camel) Case. For example,
+#'   the function name \code{my_function} will be converted to the file name
+#'   \emph{"MyFunction"}.
+#' @param file_prefix Optional file prefix name, which would specify a folder
+#'   address. If not provided, the default value is \emph{"Functions/"}. In
+#'   other words, the file name becomes \emph{"Functions/MyFunction.R"}, which
+#'   will be created in a subfolder called \emph{"Folders"}. Folders are created
+#'   with the default values of the \code{\link{add_folder}} function, which
+#'   should be run first.
+#' @param file_suffix Optional file suffix name. The default suffix is .R, so
+#'   this should usually not be changed. Beginning with the required function
+#'   name \code{build_function("special_task")} would create a skeleton function
+#'   script file called \emph{"SpecialTask.R"}, and this script file would be
+#'   created inside of the \emph{"Functions"} folder.
+#'
+#' @return An R script file for each function name provided. Unless specified,
+#'   these script files will be placed in the \emph{"Functions"} subfolder.
+#'
+#' @seealso \code{\link{add_folder}}
 #'
 #' @export
 #'
@@ -46,57 +50,64 @@
 #' build_function("meta_data_notes",file_suffix=".txt")
 #' }
 #'
-build_function <- function (function_name=NULL,
+build_function <- function (function_name,
                              file_name=NULL,
-                             file_prefix=NULL,
-                             file_suffix=NULL) {
+                             file_prefix="Functions/",
+                             file_suffix=".R") {
+  # function body
+  for (i in seq_along(function_name)) {
 
-# function body
-if (is.null(function_name)) function_name <- "toy_example"
+    # create file name is none provided
+    if (is.null(file_name)) {
+      file_name[i] <- gsub("_"," ",function_name[i])
+      file_name[i] <- stringr::str_to_title(file_name[i])
+      file_name[i] <- gsub(" ","",file_name[i])
+    }
 
-for (i in seq_along(function_name)) {
-  file_name[i] <- gsub("_"," ",function_name[i])
-  file_name[i] <- stringr::str_to_title(file_name[i])
-  file_name[i] <- gsub(" ","",file_name[i])
+    # use default prefix if none provided, add trailing "/" if none provided
+    if (is.null(file_prefix)) {
+      file_prefix <- "Functions/"
+    } else if (grepl("/$", file_prefix) == FALSE) {
+      file_prefix <- paste0(file_prefix, "/")
+    }
 
-if (is.null(file_prefix)) file_prefix <- "Functions/"
-if (is.null(file_suffix)) file_suffix <- ".R"
+    if (is.null(file_suffix)) file_suffix <- ".R"
 
-file_name[i] <- paste0(file_prefix,file_name[i],file_suffix)
+    file_name[i] <- paste0(file_prefix,file_name[i],file_suffix)
 
-if(file.exists(file_name[i])) stop(file_name[i],' already exists!')
+    if(file.exists(file_name[i])) stop(file_name[i],' already exists!')
 
-utils::write.table(cat("# --------------------------------------","\n",
-                "# FUNCTION ",function_name[i],"\n",
-                "# required packages: none","\n",
-                "# description:","\n",
-                "# inputs:","\n",
-                "# outputs:","\n",
-                "########################################","\n",
-                function_name[i]," <- function(x=NULL,y=NULL){", "\n",
-                "\n",
-                "# assign parameter defaults","\n",
-                "if (is.null(x) | is.null(y)) {", "\n",
-  "  x <- runif(10)", "\n",
-  "  y <- runif(10)", "\n",
-                                "}", "\n",
-"\n",
-                "# function body","\n",
-                "\n",
-                "\n",
-                "\n",
-                "return(print('...checking function: ",function_name[i],"()'))", "\n",
-                "\n",
-                "} # end of function ",function_name[i],"\n",
-                "# --------------------------------------","\n",
-                "# ", function_name[i],"()","\n",
-                file=file_name[i],
-                row.names="",
-                col.names="",
-                sep="",
-                append=TRUE))
-cat('Function file "', file_name[i],'" built.','\n',sep='')
-}
+    utils::write.table(cat("# --------------------------------------","\n",
+                    "# FUNCTION ",function_name[i],"\n",
+                    "# required packages: none","\n",
+                    "# description:","\n",
+                    "# inputs:","\n",
+                    "# outputs:","\n",
+                    "########################################","\n",
+                    function_name[i]," <- function(x=NULL,y=NULL){", "\n",
+                    "\n",
+                    "# assign parameter defaults","\n",
+                    "if (is.null(x) | is.null(y)) {", "\n",
+      "  x <- runif(10)", "\n",
+      "  y <- runif(10)", "\n",
+                                    "}", "\n",
+    "\n",
+                    "# function body","\n",
+                    "\n",
+                    "\n",
+                    "\n",
+                    "return(print('...checking function: ",function_name[i],"()'))", "\n",
+                    "\n",
+                    "} # end of function ",function_name[i],"\n",
+                    "# --------------------------------------","\n",
+                    "# ", function_name[i],"()","\n",
+                    file=file_name[i],
+                    row.names="",
+                    col.names="",
+                    sep="",
+                    append=TRUE))
+    cat('Function file "', file_name[i],'" built.','\n',sep='')
+  }
 } # end of build_function
 # --------------------------------------
 # build_function()
