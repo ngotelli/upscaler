@@ -5,46 +5,46 @@
 \title{Create an R Script For a New Function}
 \usage{
 build_function(
-  function_name = NULL,
+  function_name,
   file_name = NULL,
-  file_prefix = NULL,
-  file_suffix = NULL
+  file_prefix = "Functions/",
+  file_suffix = ".R"
 )
 }
 \arguments{
-\item{function_name}{Vector of character strings of the names of
-functions to add. Each function name must be written in camel case
-formatting, with all lower case letters and words separated
-by a single underscore character (example: \emph{"my_function_name"}).
-Do not include function parentheses or other characters or spaces.}
+\item{function_name}{Vector of character strings of the names of functions to
+add. Each function name must be written in snake case formatting, with all
+lower case letters and words separated by a single underscore character
+(example: \emph{"my_function_name"}). Do not include function parentheses
+or other characters or spaces.}
 
-\item{file_name}{Optional file name for the R script that
-will contain function. If not provided,
-the file name will be created by converting the function name
-from camel case to Pascal Case. For example, the function name
-\code{my_function} will be converted to the file name \emph{"MyFunction"}.}
+\item{file_name}{Optional file name for the R script that will contain
+function. If not provided, the file name will be created by converting the
+function name from snake case to Pascal (Upper Camel) Case. For example,
+the function name \code{my_function} will be converted to the file name
+\emph{"MyFunction"}.}
 
-\item{file_prefix}{Optional file prefix name, which would specify a
-folder address. If not provided, the default value is \emph{"Functions/"}.
-In other words, the file name becomes \emph{"Functions/MyFunction.R"},
- which will be created in a subfolder called \emph{"Folders"}.
- Folders is created with the default values of the \code{add_folders()}
- function, which should be run first.}
+\item{file_prefix}{Optional file prefix name, which would specify a folder
+address. If not provided, the default value is \emph{"Functions/"}. In
+other words, the file name becomes \emph{"Functions/MyFunction.R"}, which
+will be created in a subfolder called \emph{"Folders"}. Folders are created
+with the default values of the \code{\link{add_folder}} function, which
+should be run first.}
 
-\item{file_suffix}{Optional file suffix name. The default suffix
-is .R, so this should usually not be changed. Beginning with the
-required function name \code{build_function("special_task")}
-would create a skeleton function script file called
-\emph{"SpecialTask.R"}, and this script file would be created
-inside of the \emph{"Functions"} folder.}
+\item{file_suffix}{Optional file suffix name. The default suffix is .R, so
+this should usually not be changed. Beginning with the required function
+name \code{build_function("special_task")} would create a skeleton function
+script file called \emph{"SpecialTask.R"}, and this script file would be
+created inside of the \emph{"Functions"} folder.}
 }
 \value{
-An R script file for each function name provided. Unless
-specified, these script files will be placed in the
-\emph{"Functions"} subfolder.
+An R script file for each function name provided. Unless specified,
+  these script files will be placed in the \emph{"Functions"} subfolder.
 }
 \description{
-Create an R Script For a New Function
+Creates one or more template files for new functions in a designated folder.
+By default, templates will be saved in the \emph{"Functions/"} folder, as
+created by the \code{\link{add_folder}} function.
 }
 \examples{
 \dontrun{
@@ -52,4 +52,7 @@ build_function("special_task")
 build_function("meta_data_notes",file_suffix=".txt")
 }
 
+}
+\seealso{
+\code{\link{add_folder}}
 }
