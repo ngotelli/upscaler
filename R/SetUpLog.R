@@ -45,7 +45,7 @@ set_up_log <- function(my_logfile='logfile.txt',
                        overwrite_log=TRUE){
 
   if(!exists("my_seed") | is.null(user_seed))initiate_seed()
-  if(!is.null(user_seed))initiate_seed(user_seed)
+  if(!is.null(user_seed))initiate_seed(user_seed=user_seed)
 
   time_stamp <<- date()
   if(overwrite_log==FALSE) {
