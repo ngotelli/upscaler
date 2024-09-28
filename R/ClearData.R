@@ -46,7 +46,7 @@
 #' x <- 3
 #' y <- "apple"
 #' z <- TRUE
-#' clear_data('x', 'y')
+#' clear_data(c('x', 'y'))
 clear_data <- \(keep = NULL) {
   stopifnot("keep argument must be a character" = is.character(keep) | is.null(keep))
   all_data_objects <- setdiff(ls(envir = .GlobalEnv), lsf.str(envir = .GlobalEnv))
