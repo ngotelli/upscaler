@@ -6,6 +6,7 @@
 \usage{
 set_up_log(
   my_logfile = "logfile.txt",
+  user_seed = NULL,
   console_echo = FALSE,
   overwrite_log = TRUE
 )
@@ -13,6 +14,9 @@ set_up_log(
 \arguments{
 \item{my_logfile}{Character string for log file name.
 Default is \emph{logfile.txt}.}
+
+\item{user_seed}{optional integer seed provided by user and passed to \code{initiate_seed()}
+Default uses \code{initiate_seed()} to set and store a new seed each time.}
 
 \item{console_echo}{Calls function \code{echo_log_console()}. Default
 setting is \code{FALSE} so log messages are not toggled to console.}

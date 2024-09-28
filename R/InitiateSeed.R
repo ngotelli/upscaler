@@ -1,11 +1,15 @@
 # --------------------------------------
 # FUNCTION initiate_seed
-# required packages: TeachingDemos
+# required packages: none
 # description: create a reproducible seed
 # inputs: none
 # outputs: my_seed
 ########################################
 #' Automatically Select, Set, and Store Random Number Seed
+#'
+#' This function is used internally by the set_up_log function.
+#' To set a seed manually, pass it to the set_up_log function with
+#' set_up_log(user_seed=UserInteger)
 #'
 #' @param user_seed Takes as input a random number seed from the user,
 #' stores it, and sets the random number seed with the \code{set.seed()}
