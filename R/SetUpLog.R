@@ -2,13 +2,18 @@
 # FUNCTION set_up_log
 # required packages:log4r
 # description: set up logging system
-# inputs: name and address of logfile
+# inputs: my_log_file = name and address of logfile
+#         user_seed = optional integer seed for random number generator
+#         console_echo = toggle log file output to also appear in console
+#         overwrite_log = toggle to overwrite log or create a unique log file name for each run
 # outputs: logfile
 ########################################
 #' Set Up Log File
 #'
 #' @param my_logfile Character string for log file name.
 #' Default is \emph{logfile.txt}.
+#' @param user_seed optional integer seed provided by user and passed to \code{initiate_seed()}
+#' Default uses \code{initiate_seed()} to set and store a new seed each time.
 #' @param console_echo Calls function \code{echo_log_console()}. Default
 #' setting is \code{FALSE} so log messages are not toggled to console.
 #' @param overwrite_log Logical variable that specifies whether
@@ -35,10 +40,12 @@
 #' }
 #'
 set_up_log <- function(my_logfile='logfile.txt',
+                       user_seed=NULL,
                        console_echo=FALSE,
                        overwrite_log=TRUE){
 
-  if(!exists("my_seed"))initiate_seed()
+  if(!exists("my_seed") | is.null(user_seed))initiate_seed()
+  if(!is.null(user_seed))initiate_seed(user_seed=user_seed)
 
   time_stamp <<- date()
   if(overwrite_log==FALSE) {

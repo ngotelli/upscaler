@@ -45,5 +45,5 @@ clear_data('x')
 x <- 3
 y <- "apple"
 z <- TRUE
-clear_data('x', 'y')
+clear_data(c('x', 'y'))
 }

@@ -23,7 +23,9 @@ is internally stored, recorded, and passed
 to the \code{set.seed()} function.
 }
 \description{
-Automatically Select, Set, and Store Random Number Seed
+This function is used internally by the set_up_log function.
+To set a seed manually, pass it to the set_up_log function with
+set_up_log(user_seed=UserInteger)
 }
 \examples{
 \dontrun{

@@ -4,24 +4,16 @@
 \alias{build_function}
 \title{Create an R Script For a New Function}
 \usage{
-build_function(
-  function_name,
-  file_name = NULL,
-  file_prefix = "Functions/",
-  file_suffix = ".R"
-)
+build_function(function_name, file_prefix = "Functions/", file_suffix = ".R")
 }
 \arguments{
 \item{function_name}{Vector of character strings of the names of functions to
 add. Each function name must be written in snake case formatting, with all
 lower case letters and words separated by a single underscore character
 (example: \emph{"my_function_name"}). Do not include function parentheses
-or other characters or spaces.}
-
-\item{file_name}{Optional file name for the R script that will contain
-function. If not provided, the file name will be created by converting the
-function name from snake case to Pascal (Upper Camel) Case. For example,
-the function name \code{my_function} will be converted to the file name
+or other characters or spaces. If not provided, the file name will be created by
+converting the function name from snake case to Pascal (Upper Camel) Case.
+For example, the function name \code{my_function} will be converted to the file name
 \emph{"MyFunction"}.}
 
 \item{file_prefix}{Optional file prefix name, which would specify a folder

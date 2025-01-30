@@ -3,8 +3,6 @@
 # required packages: stringr
 # description: create a function in a new named script
 # inputs: vector of name of function(s),
-#   name of script (optional,
-#   created from function name snake_case to PascalCase)
 #   file name suffix (default=".R"),
 #   file name prefix (default="Functions/")
 # outputs: named script file(s) containing named function template(s)
@@ -19,11 +17,9 @@
 #'   add. Each function name must be written in snake case formatting, with all
 #'   lower case letters and words separated by a single underscore character
 #'   (example: \emph{"my_function_name"}). Do not include function parentheses
-#'   or other characters or spaces.
-#' @param file_name Optional file name for the R script that will contain
-#'   function. If not provided, the file name will be created by converting the
-#'   function name from snake case to Pascal (Upper Camel) Case. For example,
-#'   the function name \code{my_function} will be converted to the file name
+#'   or other characters or spaces. If not provided, the file name will be created by
+#'   converting the function name from snake case to Pascal (Upper Camel) Case.
+#'   For example, the function name \code{my_function} will be converted to the file name
 #'   \emph{"MyFunction"}.
 #' @param file_prefix Optional file prefix name, which would specify a folder
 #'   address. If not provided, the default value is \emph{"Functions/"}. In
@@ -51,18 +47,17 @@
 #' }
 #'
 build_function <- function (function_name,
-                             file_name=NULL,
                              file_prefix="Functions/",
                              file_suffix=".R") {
-  # function body
+
+   # function body
+  file_name <- rep(NA,length(function_name))
   for (i in seq_along(function_name)) {
 
-    # create file name is none provided
-    if (is.null(file_name)) {
+    # create file name
       file_name[i] <- gsub("_"," ",function_name[i])
       file_name[i] <- stringr::str_to_title(file_name[i])
       file_name[i] <- gsub(" ","",file_name[i])
-    }
 
     # use default prefix if none provided, add trailing "/" if none provided
     if (is.null(file_prefix)) {
