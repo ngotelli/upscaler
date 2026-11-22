@@ -4,15 +4,20 @@
 \alias{source_batch}
 \title{Batch Sourcing of Multiple R script files}
 \usage{
-source_batch(folder = NULL, filetype = "*.R$")
+source_batch(folder = NULL, subset = "", filetype = "*.R$")
 }
 \arguments{
 \item{folder}{Name of subfolder that contains R scripts to be sourced.
 This folder name could be expanded to a path statement to source script
 files in other locations. Scripts are sourced in alphabetical order
-of their names. The function is not recursive so scripts contained within
+of their names (unless parameter subset is specified.
+The function is not recursive so scripts contained within
 subfolders are not sourced. The function fails if no folder is given,
-if the folder does not exist, or if it is empty.}
+if the folder does not exist, or if the folder is empty.}
+
+\item{subset}{Ordered character string vector specifying which R scripts
+should be sequentially sourced.
+The default subset="" sources all R scripts in the folder in alphabetical order.}
 
 \item{filetype}{Pattern to specify file type. Default is \emph{"*.R$"}.
 To source all of the files in a folder as R scripts,
@@ -20,14 +25,16 @@ even if they do not contain the \emph{".R"} suffix, use \emph{"*.*$"}}
 }
 \value{
 Runs the \code{source()} function on each R script file
-contained in the folder.
+contained in the folder (or in the ordered list given by subset).
 }
 \description{
 Batch Sourcing of Multiple R script files
 }
 \examples{
 \dontrun{
-source_batch("Functions")
+source_batch(folder="Functions")
+source_batch(folder="Functions",
+       subset=c("Prelims.R","Core.R","Coda.R"))
 }
 
 }
