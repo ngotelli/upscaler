@@ -85,15 +85,17 @@ build_function <- function (function_name,
                     "if (is.null(x) | is.null(y)) {", "\n",
       "  x <- runif(10)", "\n",
       "  y <- runif(10)", "\n",
+      "  warning('function " ,function_name[i],"() ","called without user inputs!')","\n",
                                     "}", "\n",
     "\n",
                     "# function body","\n",
                     "\n",
                     "\n",
                     "\n",
-                    "return(print('...checking function: ",function_name[i],"()'))", "\n",
-                    "\n",
-                    "} # end of function ",function_name[i],"\n",
+    "message('...checking function: ",function_name[i],"()')", "\n",
+    "# return(list(output=x[1:3]))", "\n",
+    "\n",
+    "} # end of function ",function_name[i],"\n",
                     "# --------------------------------------","\n",
                     "# ", function_name[i],"()","\n",
                     file=file_name[i],
@@ -101,7 +103,7 @@ build_function <- function (function_name,
                     col.names="",
                     sep="",
                     append=TRUE))
-    cat('Function file "', file_name[i],'" built.','\n',sep='')
+    message('Function file "', file_name[i],'" built.')
   }
 } # end of build_function
 # --------------------------------------
