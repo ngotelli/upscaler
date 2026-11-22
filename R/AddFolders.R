@@ -42,7 +42,7 @@ if(is.null(folder_names)) {folder_names <- c("OriginalData",
 for (i in seq_along(folder_names)) {
   if (dir.exists(folder_names[i])) stop("folder ",folder_names[i],
                                        " already exists!") else {dir.create(folder_names[i])
-                                             cat("folder ","'",folder_names[i],"'",
+                                             message("folder ","'",folder_names[i],"'",
                                              " created",sep="",
                                              "\n")
                                        }
