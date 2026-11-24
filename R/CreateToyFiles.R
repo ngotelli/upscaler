@@ -19,7 +19,9 @@
 #' @examples
 #' \dontrun{
 #' create_toy_files()
-#' create_toy_files(folder_name="ToyFiles2", number_files=10,file_template="OriginalData/FieldSurvey.csv")
+#' create_toy_files(folder_name="ToyFiles2",
+#' number_files=10,
+#' file_template="OriginalData/FieldSurvey.csv")}
 #'
 create_toy_files <- function(folder_name="ToyFiles",
                              number_files=6,
