@@ -7,7 +7,7 @@
 #       : file_template = optional name and location of template file
 # outputs: creates specified number of .csv files in folder location
 ########################################
-#' Title
+#' Create a Folder of Toy Data Files for Batch Analysis
 #'
 #' @param folder_name name (and path) of new Toyfile folder to create. Default is "ToyFiles:="
 #' @param number_files number of toy data files .csv to create. Default is 6 toy data files.

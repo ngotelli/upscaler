@@ -2,7 +2,7 @@
 % Please edit documentation in R/CreateToyFiles.R
 \name{create_toy_files}
 \alias{create_toy_files}
-\title{Title}
+\title{Create a Folder of Toy Data Files for Batch Analysis}
 \usage{
 create_toy_files(
   folder_name = "ToyFiles",
@@ -21,7 +21,7 @@ create_toy_files(
 creates folder and writes specified number of .csv files.
 }
 \description{
-Title
+Create a Folder of Toy Data Files for Batch Analysis
 }
 \examples{
 \dontrun{
